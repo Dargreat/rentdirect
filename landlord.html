@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landlord Dashboard - Rent Direct Ghana</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --dark-green: #27ae60;
+            --light-green: #d5f5e3;
+            --off-white: #f9f9f9;
+            --pure-white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Mobile Navbar */
+        .mobile-navbar {
+            display: none;
+            background: var(--pure-white);
+            box-shadow: var(--shadow);
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mobile-logo i {
+            color: var(--primary-green);
+            font-size: 1.5rem;
+        }
+
+        .mobile-logo h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--text-dark);
+        }
+
+        .mobile-logo span {
+            color: var(--primary-green);
+        }
+
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 260px;
+            background: var(--pure-white);
+            box-shadow: var(--shadow);
+            height: 100vh;
+            position: fixed;
+            padding: 1.5rem 1rem;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .logo-dash {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
+        }
+
+        .logo-dash i {
+            color: var(--primary-green);
+            font-size: 1.8rem;
+        }
+
+        .logo-dash h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .logo-dash span {
+            color: var(--primary-green);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.8rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            color: var(--text-light);
+            border-radius: 8px;
+            transition: var(--transition);
+            gap: 12px;
+        }
+
+        .sidebar-menu a i {
+            width: 24px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--light-green);
+            color: var(--primary-green);
+        }
+
+        .sidebar-menu a.active {
+            font-weight: 600;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content-wrapper {
+            flex: 1;
+        }
+
+        /* Topbar Styles */
+        .topbar {
+            background: var(--pure-white);
+            box-shadow: var(--shadow);
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .search-bar {
+            position: relative;
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.8rem 1.2rem 0.8rem 2.8rem;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--light-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-green);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .user-info {
+            line-height: 1.3;
+        }
+
+        .user-info .name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .user-info .role {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 2rem;
+            margin-top: 20px;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+            border-radius: 15px;
+            padding: 2.5rem;
+            color: white;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .welcome-text h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-text p {
+            max-width: 600px;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--pure-white);
+            border-radius: 15px;
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            background: var(--light-green);
+        }
+
+        .stat-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--text-dark);
+        }
+
+        .stat-title {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .trend-up {
+            color: var(--primary-green);
+        }
+
+        .trend-down {
+            color: #e74c3c;
+        }
+
+        .stat-trend i {
+            margin-right: 5px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2.5rem 0 1.5rem;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary-green);
+            color: var(--pure-white);
+            box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--dark-green);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(46, 204, 113, 0.4);
+        }
+
+        /* Properties Table */
+        .properties-container {
+            background: var(--pure-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .properties-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .properties-table th {
+            background: var(--light-green);
+            padding: 1.2rem 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .properties-table td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid #eee;
+            color: var(--text-dark);
+        }
+
+        .property-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .property-image {
+            width: 70px;
+            height: 60px;
+            border-radius: 8px;
+            background: #f0f0f0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+        }
+
+        .property-details {
+            line-height: 1.4;
+        }
+
+        .property-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .property-location {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-occupied {
+            background: #e8f8ef;
+            color: var(--primary-green);
+        }
+
+        .status-vacant {
+            background: #fef9e7;
+            color: #f39c12;
+        }
+
+        .action-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-light);
+        }
+
+        .action-icon:hover {
+            background: var(--light-green);
+            color: var(--primary-green);
+            transform: translateY(-3px);
+        }
+
+        /* Recent Payments */
+        .payments-container {
+            background: var(--pure-white);
+            border-radius: 15px;
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .payments-container h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+        }
+
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .payment-item:last-child {
+            border-bottom: none;
+        }
+
+        .payment-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .payment-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: var(--light-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-green);
+            font-size: 1.2rem;
+        }
+
+        .payment-details {
+            line-height: 1.4;
+        }
+
+        .payment-tenant {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .payment-property {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .payment-amount {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--text-dark);
+            color: var(--pure-white);
+            padding: 3rem 2rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-green);
+        }
+
+        .footer-col p {
+            color: #bbb;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-green);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #444;
+            color: var(--pure-white);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary-green);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 80px;
+                padding: 1.5rem 0.5rem;
+            }
+            
+            .logo-dash h1, .menu-text {
+                display: none;
+            }
+            
+            .logo-dash {
+                justify-content: center;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+            }
+            
+            .sidebar-menu a {
+                justify-content: center;
+                padding: 0.8rem;
+            }
+            
+            .sidebar-menu a i {
+                font-size: 1.4rem;
+            }
+            
+            .user-info {
+                display: none;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .welcome-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+            }
+            
+            .welcome-text h2 {
+                font-size: 1.6rem;
+            }
+            
+            .welcome-image {
+                margin-top: 1.5rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .topbar {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+                order: 2;
+            }
+            
+            .dashboard-content {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .mobile-navbar {
+                display: flex;
+            }
+            
+            .sidebar {
+                width: 0;
+                overflow: hidden;
+                top: 70px;
+                height: calc(100vh - 70px);
+            }
+            
+            .sidebar.active {
+                width: 260px;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                margin-top: 70px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .topbar {
+                display: none;
+            }
+            
+            .action-buttons {
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Navbar -->
+    <div class="mobile-navbar">
+        <div class="mobile-logo">
+            <i class="fas fa-home"></i>
+            <h1>Rent <span>Direct</span></h1>
+        </div>
+        <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-dash">
+            <i class="fas fa-home"></i>
+            <h1>Rent <span>Direct</span></h1>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active"><i class="fas fa-th-large"></i> <span class="menu-text">Dashboard</span></a></li>
+            <li><a href="#"><i class="fas fa-building"></i> <span class="menu-text">Properties</span></a></li>
+            <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> <span class="menu-text">Payments</span></a></li>
+            <li><a href="#"><i class="fas fa-comments"></i> <span class="menu-text">Messages</span></a></li>
+            <li><a href="#"><i class="fas fa-users"></i> <span class="menu-text">Tenants</span></a></li>
+            <li><a href="#"><i class="fas fa-chart-line"></i> <span class="menu-text">Reports</span></a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> <span class="menu-text">Settings</span></a></li>
+            <li><a href="#"><i class="fas fa-question-circle"></i> <span class="menu-text">Help</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content-wrapper">
+            <!-- Topbar -->
+            <div class="topbar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search properties, tenants, payments...">
+                </div>
+                
+                <div class="topbar-actions">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    
+                    <div class="user-profile">
+                        <div class="user-avatar">AO</div>
+                        <div class="user-info">
+                            <div class="name">Abena Owusu</div>
+                            <div class="role">Landlord</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <div class="welcome-text">
+                        <h2>Welcome back, Abena!</h2>
+                        <p>Here's what's happening with your properties today. You have 2 new messages and 3 pending payments.</p>
+                    </div>
+                    <div class="welcome-image">
+                        <i class="fas fa-chart-line" style="font-size: 4rem; opacity: 0.3;"></i>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">Total Properties</div>
+                            <div class="stat-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">8</div>
+                        <div class="stat-trend trend-up">
+                            <i class="fas fa-arrow-up"></i> 2 new this month
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">Occupancy Rate</div>
+                            <div class="stat-icon">
+                                <i class="fas fa-bed"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">87%</div>
+                        <div class="stat-trend trend-up">
+                            <i class="fas fa-arrow-up"></i> 5% from last month
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">Monthly Revenue</div>
+                            <div class="stat-icon">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">₵12,450</div>
+                        <div class="stat-trend trend-down">
+                            <i class="fas fa-arrow-down"></i> 3% from last month
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-title">Pending Payments</div>
+                            <div class="stat-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-value">3</div>
+                        <div class="stat-trend">
+                            Total ₵5,700 pending
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Properties Section -->
+                <div class="section-header">
+                    <h2 class="section-title">My Properties</h2>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Property
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="properties-container">
+                    <div class="table-responsive">
+                        <table class="properties-table">
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th>Rent</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="property-info">
+                                            <div class="property-image">
+                                                <i class="fas fa-home"></i>
+                                            </div>
+                                            <div class="property-details">
+                                                <div class="property-name">Luxury Apartment</div>
+                                                <div class="property-location">
+                                                    <i class="fas fa-map-marker-alt"></i> East Legon, Accra
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Apartment</td>
+                                    <td>Accra</td>
+                                    <td>₵2,500</td>
+                                    <td>
+                                        <span class="status-badge status-occupied">Occupied</span>
+                                    </td>
+                                    <td>
+                                        <div class="action-icons">
+                                            <div class="action-icon">
+                                                <i class="fas fa-eye"></i>
+                                            </div>
+                                            <div class="action-icon">
+                                                <i class="fas fa-edit"></i>
+                                            </div>
+                                            <div class="action-icon">
+                                                <i class="fas fa-envelope"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="property-info">
+                                            <div class="property-image">
+                                                <i class="fas fa-home"></i>
+                                            </div>
+                                            <div class="property-details">
+                                                <div class="property-name">Modern Duplex</div>
+                                                <div class="property-location">
+                                                    <i class="fas fa-map-marker-alt"></i> Cantonments, Accra
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>House</td>
+                                    <td>Accra</td>
+                                    <td>₵4,200</td>
+                                    <td>
+                                        <span class="status-badge status-vacant">Vacant</span>
+                                    </td>
+                                    <td>
+                                        <div class="action-icons">
+                                            <div class="action-icon">
+                                                <i class="fas fa-eye"></i>
+                                            </div>
+                                            <div class="action-icon">
+                                                <i class="fas fa-edit"></i>
+                                            </div>
+                                            <div class="action-icon">
+                                                <i class="fas fa-envelope"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="property-info">
+                                            <div class="property-image">
+                                                <i class="fas fa-home"></i>
+                                            </div>
+                                            <div class="property-details">
+                                                <div class="property-name">Cozy Studio</div>
+                                                <div class="property-location">
+                                                    <i class="fas fa-map-marker-alt"></i> Osu, Accra
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Studio</td>
+                                    <td>Accra</td>
+                                    <td>₵1,200</td>
+                                    <td>
+                                        <span class="status-badge status-occupied">Occupied</span>
+                                    </td>
+                                    <td>
+                                        <div class="action-icons">
+                                            <div class="action-icon">
+                                                <i class="fas fa-eye"></i>
+                                            </div>
+                                            <div class="action-icon">
+                                                <i class="fas fa-edit"></i>
+                                            </div>
+                                            <div class="action-icon">
+                                                <i class="fas fa-envelope"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="property-info">
+                                            <div class="property-image">
+                                                <i class="fas fa-home"></i>
+                                            </div>
+                                            <div class="property-details">
+                                                <div class="property-name">Family House</div>
+                                                <div class="property-location">
+                                                    <i class="fas fa-map-marker-alt"></i> Kumasi, Ashanti
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>House</td>
+                                    <td>Kumasi</td>
+                                    <td>₵1,800</td>
+                                    <td>
+                                        <span class="status-badge status-occupied">Occupied</span>
+                                    </td>
+                                    <td>
+                                        <div class="action-icons">
+                                            <div class="action-icon">
+                                                <i class="fas fa-eye"></i>
+                                            </div>
+                                            <div class="action-icon">
+                                                <i class="fas fa-edit"></i>
+                                            </div>
+                                            <div class="action-icon">
+                                                <i class="fas fa-envelope"></i>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Payments -->
+                <div class="section-header">
+                    <h2 class="section-title">Recent Payments</h2>
+                </div>
+                
+                <div class="payments-container">
+                    <h3>Latest Transactions</h3>
+                    <div class="payment-item">
+                        <div class="payment-info">
+                            <div class="payment-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="payment-details">
+                                <div class="payment-tenant">Kwame Mensah</div>
+                                <div class="payment-property">Luxury Apartment - Rent for June</div>
+                            </div>
+                        </div>
+                        <div class="payment-amount">₵2,500</div>
+                    </div>
+                    
+                    <div class="payment-item">
+                        <div class="payment-info">
+                            <div class="payment-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="payment-details">
+                                <div class="payment-tenant">Ama Serwaa</div>
+                                <div class="payment-property">Cozy Studio - Rent for June</div>
+                            </div>
+                        </div>
+                        <div class="payment-amount">₵1,200</div>
+                    </div>
+                    
+                    <div class="payment-item">
+                        <div class="payment-info">
+                            <div class="payment-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="payment-details">
+                                <div class="payment-tenant">Kofi Asare</div>
+                                <div class="payment-property">Family House - Rent for June</div>
+                            </div>
+                        </div>
+                        <div class="payment-amount">₵1,800</div>
+                    </div>
+                    
+                    <div class="payment-item">
+                        <div class="payment-info">
+                            <div class="payment-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="payment-details">
+                                <div class="payment-tenant">Yaw Boateng</div>
+                                <div class="payment-property">Modern Duplex - Security Deposit</div>
+                            </div>
+                        </div>
+                        <div class="payment-amount">₵4,200</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Rent Direct</h3>
+                    <p>Ghana's premier platform connecting tenants and landlords directly. No middlemen, no hassle.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Features</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Pricing</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Accra, Ghana</a></li>
+                        <li><a href="tel:+233123456789"><i class="fas fa-phone-alt"></i> +233 123 456 789</a></li>
+                        <li><a href="mailto:info@rentdirectgh.com"><i class="fas fa-envelope"></i> info@rentdirectgh.com</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to get special offers and updates</p>
+                    <form>
+                        <input type="email" placeholder="Your Email" style="width:100%; padding:12px; margin-bottom:10px; border-radius:5px; border:none">
+                        <button class="btn btn-primary" style="width:100%">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Rent Direct Ghana. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const sidebar = document.querySelector('.sidebar');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            // Change icon based on state
+            const icon = mobileMenuBtn.querySelector('i');
+            if (sidebar.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 576) {
+                    sidebar.classList.remove('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        });
+        
+        // Property status badges
+        const statusBadges = document.querySelectorAll('.status-badge');
+        
+        statusBadges.forEach(badge => {
+            if (badge.textContent === 'Occupied') {
+                badge.classList.add('status-occupied');
+            } else if (badge.textContent === 'Vacant') {
+                badge.classList.add('status-vacant');
+            }
+        });
+        
+        // Action icons hover effect
+        const actionIcons = document.querySelectorAll('.action-icon');
+        
+        actionIcons.forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = '0 5px 10px rgba(0,0,0,0.1)';
+            });
+            
+            icon.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+        
+        // Simulate loading animation for stats
+        const statValues = document.querySelectorAll('.stat-value');
+        
+        statValues.forEach(value => {
+            const originalText = value.textContent;
+            value.textContent = '0';
+            
+            let counter = 0;
+            const target = parseInt(originalText.replace(/\D/g, ''));
+            const duration = 1500;
+            const increment = target / (duration / 16);
+            
+            const updateCounter = () => {
+                counter += increment;
+                if (counter < target) {
+                    value.textContent = Math.ceil(counter);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    value.textContent = originalText;
+                }
+            };
+            
+            setTimeout(updateCounter, 500);
+        });
+
+        // Responsive adjustments
+        function handleResize() {
+            if (window.innerWidth >= 576) {
+                sidebar.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+    </script>
+</body>
+</html>

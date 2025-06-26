@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenant Dashboard - Rent Direct Ghana</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --dark-green: #27ae60;
+            --light-green: #d5f5e3;
+            --off-white: #f9f9f9;
+            --pure-white: #ffffff;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --shadow: 0 5px 15px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--off-white);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--pure-white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .sidebar-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            margin-bottom: 1rem;
+        }
+
+        .tenant-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .tenant-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--light-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary-green);
+        }
+
+        .tenant-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .tenant-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .sidebar-links {
+            padding: 1rem 0;
+        }
+
+        .sidebar-links a {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: var(--transition);
+            gap: 12px;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-links a:hover, .sidebar-links a.active {
+            color: var(--primary-green);
+            background: var(--light-green);
+            border-left: 3px solid var(--primary-green);
+        }
+
+        .sidebar-links a i {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            padding: 1.5rem;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: var(--off-white);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            transition: var(--transition);
+        }
+
+        /* Topbar */
+        .topbar {
+            background: var(--pure-white);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--off-white);
+            border-radius: 30px;
+            padding: 0.5rem 1.5rem;
+            width: 400px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            padding: 0.5rem;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-bar i {
+            color: var(--text-light);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .notification-icon, .user-menu {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notification-icon i {
+            font-size: 1.3rem;
+            color: var(--text-light);
+        }
+
+        .notification-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--primary-green);
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-menu img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-header p {
+            color: var(--text-light);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .stat-card {
+            background: var(--pure-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: var(--light-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-green);
+        }
+
+        .stat-info h3 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Properties Section */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+        }
+
+        .section-title a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .property-card {
+            background: var(--pure-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .property-image {
+            height: 200px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            position: relative;
+        }
+
+        .property-price {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255,255,255,0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .property-actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .property-action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .property-action-btn:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .property-info {
+            padding: 1.5rem;
+        }
+
+        .property-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .property-feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .property-feature i {
+            font-size: 1.2rem;
+            color: var(--primary-green);
+            margin-bottom: 5px;
+        }
+
+        .property-feature span {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .contact-landlord {
+            background: var(--light-green);
+            color: var(--primary-green);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: var(--transition);
+        }
+
+        .contact-landlord:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        /* Contacts Section */
+        .contacts-section {
+            background: var(--pure-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .contact-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            transition: var(--transition);
+            border: 1px solid #eee;
+        }
+
+        .contact-card:hover {
+            background: var(--light-green);
+            transform: translateY(-3px);
+        }
+
+        .contact-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--light-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--primary-green);
+        }
+
+        .contact-info h4 {
+            margin-bottom: 0.2rem;
+        }
+
+        .contact-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                overflow: visible;
+            }
+            
+            .sidebar-header, .tenant-info, .sidebar-links span, .sidebar-footer {
+                display: none;
+            }
+            
+            .sidebar-links a {
+                justify-content: center;
+                padding: 1rem;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+            }
+            
+            .sidebar-links a:hover, .sidebar-links a.active {
+                border-left: none;
+                border-bottom: 3px solid var(--primary-green);
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .search-bar {
+                width: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .topbar {
+                padding: 1rem;
+            }
+            
+            .search-bar {
+                display: none;
+            }
+            
+            .hamburger {
+                display: block;
+                cursor: pointer;
+                background: none;
+                border: none;
+                margin-right: 1rem;
+            }
+            
+            .hamburger span {
+                display: block;
+                width: 25px;
+                height: 3px;
+                background: var(--text-dark);
+                margin: 5px 0;
+                transition: var(--transition);
+                border-radius: 3px;
+            }
+            
+            .properties-grid, .contacts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .topbar-actions {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="tenant-profile">
+                <div class="tenant-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="tenant-info">
+                    <h3>Kwame Mensah</h3>
+                    <p>Tenant in Accra</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar-links">
+            <a href="#" class="active">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-search"></i>
+                <span>Find Properties</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-heart"></i>
+                <span>Saved Properties</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-address-book"></i>
+                <span>My Contacts</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-comments"></i>
+                <span>Messages</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-file-alt"></i>
+                <span>Applications</span>
+            </a>
+            <a href="#">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </div>
+        
+        <div class="sidebar-footer">
+            <a href="#" class="btn btn-login" style="width:100%; text-align:center; display:block;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="left-section">
+                <button class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search properties...">
+                </div>
+            </div>
+            
+            <div class="topbar-actions">
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="user-menu">
+                    <div class="tenant-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h1>Welcome Back, Kwame!</h1>
+                <p>Here's what's happening with your rental search</p>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>5</h3>
+                        <p>Saved Properties</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-address-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>3</h3>
+                        <p>Landlord Contacts</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>7</h3>
+                        <p>Unread Messages</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>2</h3>
+                        <p>Pending Applications</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recommended Properties -->
+            <div class="properties-section">
+                <div class="section-title">
+                    <h2>Recommended Properties</h2>
+                    <a href="#">
+                        View All <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="properties-grid">
+                    <div class="property-card">
+                        <div class="property-image">
+                            <div class="property-price">₵1,200/month</div>
+                            <div class="property-actions">
+                                <div class="property-action-btn">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="property-action-btn">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="property-info">
+                            <h3>Modern 2-Bedroom Apartment</h3>
+                            <div class="property-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>East Legon, Accra</span>
+                            </div>
+                            <div class="property-features">
+                                <div class="property-feature">
+                                    <i class="fas fa-bed"></i>
+                                    <span>2 Beds</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-bath"></i>
+                                    <span>2 Baths</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-vector-square"></i>
+                                    <span>120 m²</span>
+                                </div>
+                            </div>
+                            <button class="contact-landlord">
+                                <i class="fas fa-unlock"></i> Unlock Contact (₵50)
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-image" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                            <div class="property-price">₵900/month</div>
+                            <div class="property-actions">
+                                <div class="property-action-btn">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="property-action-btn">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="property-info">
+                            <h3>Spacious Studio Apartment</h3>
+                            <div class="property-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Osu, Accra</span>
+                            </div>
+                            <div class="property-features">
+                                <div class="property-feature">
+                                    <i class="fas fa-bed"></i>
+                                    <span>1 Bed</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-bath"></i>
+                                    <span>1 Bath</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-vector-square"></i>
+                                    <span>60 m²</span>
+                                </div>
+                            </div>
+                            <button class="contact-landlord">
+                                <i class="fas fa-unlock"></i> Unlock Contact (₵50)
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-image" style="background: linear-gradient(135deg, #9b59b6, #8e44ad);">
+                            <div class="property-price">₵2,500/month</div>
+                            <div class="property-actions">
+                                <div class="property-action-btn">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="property-action-btn">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="property-info">
+                            <h3>Luxury 3-Bedroom Villa</h3>
+                            <div class="property-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Airport Residential, Accra</span>
+                            </div>
+                            <div class="property-features">
+                                <div class="property-feature">
+                                    <i class="fas fa-bed"></i>
+                                    <span>3 Beds</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-bath"></i>
+                                    <span>3 Baths</span>
+                                </div>
+                                <div class="property-feature">
+                                    <i class="fas fa-vector-square"></i>
+                                    <span>240 m²</span>
+                                </div>
+                            </div>
+                            <button class="contact-landlord">
+                                <i class="fas fa-unlock"></i> Unlock Contact (₵50)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Contacts -->
+            <div class="contacts-section">
+                <div class="section-title">
+                    <h2>Your Contacts</h2>
+                    <a href="#">
+                        View All <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="contacts-grid">
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Abena Owusu</h4>
+                            <p>Landlord • East Legon Property</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Kofi Asare</h4>
+                            <p>Property Manager • Osu Apartments</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>Yaa Mensah</h4>
+                            <p>Landlord • Airport Residential Villa</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const sidebar = document.querySelector('.sidebar');
+        
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+        
+        // Property action buttons
+        const heartBtns = document.querySelectorAll('.property-action-btn');
+        heartBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const heartIcon = this.querySelector('i');
+                if (heartIcon.classList.contains('fa-heart')) {
+                    heartIcon.classList.remove('fa-heart');
+                    heartIcon.classList.add('fa-heart-circle-check');
+                    heartIcon.style.color = 'var(--primary-green)';
+                } else {
+                    heartIcon.classList.remove('fa-heart-circle-check');
+                    heartIcon.classList.add('fa-heart');
+                    heartIcon.style.color = '';
+                }
+            });
+        });
+        
+        // Contact unlock buttons
+        const unlockBtns = document.querySelectorAll('.contact-landlord');
+        unlockBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-check"></i> Contact Unlocked!';
+                    this.style.background = 'var(--primary-green)';
+                    this.style.color = 'white';
+                    
+                    // Reset after 3 seconds
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.style.background = '';
+                        this.style.color = '';
+                    }, 3000);
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>
