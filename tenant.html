@@ -8,9 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-green: #2ecc71;
-            --dark-green: #27ae60;
-            --light-green: #d5f5e3;
+            --primary-blue: #3498db;
+            --dark-blue: #2980b9;
+            --light-blue: #d6eaf8;
             --off-white: #f9f9f9;
             --pure-white: #ffffff;
             --text-dark: #333333;
@@ -32,6 +32,7 @@
             color: var(--text-dark);
             overflow-x: hidden;
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
         }
 
@@ -64,12 +65,12 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: var(--light-green);
+            background: var(--light-blue);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
-            color: var(--primary-green);
+            color: var(--primary-blue);
         }
 
         .tenant-info h3 {
@@ -99,9 +100,9 @@
         }
 
         .sidebar-links a:hover, .sidebar-links a.active {
-            color: var(--primary-green);
-            background: var(--light-green);
-            border-left: 3px solid var(--primary-green);
+            color: var(--primary-blue);
+            background: var(--light-blue);
+            border-left: 3px solid var(--primary-blue);
         }
 
         .sidebar-links a i {
@@ -123,6 +124,12 @@
             flex: 1;
             margin-left: var(--sidebar-width);
             transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-wrapper {
+            flex: 1;
         }
 
         /* Topbar */
@@ -136,6 +143,29 @@
             position: sticky;
             top: 0;
             z-index: 90;
+        }
+
+        .left-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            margin: 5px 0;
+            transition: var(--transition);
+            border-radius: 3px;
         }
 
         .search-bar {
@@ -181,7 +211,7 @@
             position: absolute;
             top: -5px;
             right: -5px;
-            background: var(--primary-green);
+            background: var(--primary-blue);
             color: white;
             font-size: 0.7rem;
             width: 18px;
@@ -202,6 +232,7 @@
         /* Dashboard Content */
         .dashboard-content {
             padding: 2rem;
+            flex: 1;
         }
 
         .dashboard-header {
@@ -240,12 +271,12 @@
             width: 60px;
             height: 60px;
             border-radius: 15px;
-            background: var(--light-green);
+            background: var(--light-blue);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            color: var(--primary-green);
+            color: var(--primary-blue);
         }
 
         .stat-info h3 {
@@ -274,7 +305,7 @@
         }
 
         .section-title a {
-            color: var(--primary-green);
+            color: var(--primary-blue);
             text-decoration: none;
             font-weight: 500;
             display: flex;
@@ -304,7 +335,7 @@
 
         .property-image {
             height: 200px;
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
             position: relative;
         }
 
@@ -316,7 +347,7 @@
             padding: 0.5rem 1rem;
             border-radius: 30px;
             font-weight: 600;
-            color: var(--primary-green);
+            color: var(--primary-blue);
         }
 
         .property-actions {
@@ -341,7 +372,7 @@
         }
 
         .property-action-btn:hover {
-            background: var(--primary-green);
+            background: var(--primary-blue);
             color: white;
         }
 
@@ -379,7 +410,7 @@
 
         .property-feature i {
             font-size: 1.2rem;
-            color: var(--primary-green);
+            color: var(--primary-blue);
             margin-bottom: 5px;
         }
 
@@ -389,8 +420,8 @@
         }
 
         .contact-landlord {
-            background: var(--light-green);
-            color: var(--primary-green);
+            background: var(--light-blue);
+            color: var(--primary-blue);
             border: none;
             padding: 0.8rem;
             border-radius: 8px;
@@ -402,7 +433,7 @@
         }
 
         .contact-landlord:hover {
-            background: var(--primary-green);
+            background: var(--primary-blue);
             color: white;
         }
 
@@ -432,7 +463,7 @@
         }
 
         .contact-card:hover {
-            background: var(--light-green);
+            background: var(--light-blue);
             transform: translateY(-3px);
         }
 
@@ -440,12 +471,12 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: var(--light-green);
+            background: var(--light-blue);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
-            color: var(--primary-green);
+            color: var(--primary-blue);
         }
 
         .contact-info h4 {
@@ -455,6 +486,225 @@
         .contact-info p {
             color: var(--text-light);
             font-size: 0.9rem;
+        }
+
+        /* Safety Tips Section */
+        .safety-tips {
+            background: var(--pure-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .safety-tips h3 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .safety-tips ul {
+            padding-left: 1.5rem;
+        }
+
+        .safety-tips li {
+            margin-bottom: 0.8rem;
+            color: var(--text-light);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .safety-tips li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--text-dark);
+            color: var(--pure-white);
+            padding: 3rem 2rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-blue);
+        }
+
+        .footer-col p {
+            color: #bbb;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #444;
+            color: var(--pure-white);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary-blue);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        /* Terms & Conditions Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow: auto;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--pure-white);
+            margin: 5% auto;
+            width: 80%;
+            max-width: 900px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            background: var(--primary-blue);
+            color: var(--pure-white);
+            padding: 1.5rem 2rem;
+            border-radius: 15px 15px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--pure-white);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .modal-body h4 {
+            color: var(--primary-blue);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.3rem;
+        }
+
+        .modal-body p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .modal-body ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-body li {
+            margin-bottom: 0.8rem;
+            color: var(--text-light);
         }
 
         /* Responsive Design */
@@ -477,7 +727,7 @@
             
             .sidebar-links a:hover, .sidebar-links a.active {
                 border-left: none;
-                border-bottom: 3px solid var(--primary-green);
+                border-bottom: 3px solid var(--primary-blue);
             }
             
             .main-content {
@@ -512,24 +762,19 @@
             
             .hamburger {
                 display: block;
-                cursor: pointer;
-                background: none;
-                border: none;
                 margin-right: 1rem;
-            }
-            
-            .hamburger span {
-                display: block;
-                width: 25px;
-                height: 3px;
-                background: var(--text-dark);
-                margin: 5px 0;
-                transition: var(--transition);
-                border-radius: 3px;
             }
             
             .properties-grid, .contacts-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .dashboard-content {
+                padding: 1.5rem;
+            }
+
+            .safety-tips {
+                padding: 1rem;
             }
         }
 
@@ -540,6 +785,19 @@
             
             .topbar-actions {
                 gap: 1rem;
+            }
+
+            .dashboard-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
             }
         }
     </style>
@@ -631,6 +889,18 @@
             <div class="dashboard-header">
                 <h1>Welcome Back, Kwame!</h1>
                 <p>Here's what's happening with your rental search</p>
+            </div>
+            
+            <!-- Safety Tips -->
+            <div class="safety-tips">
+                <h3><i class="fas fa-shield-alt"></i> Safety Tips for Tenants</h3>
+                <ul>
+                    <li>Always confirm the landlord's identity before making any form of payment.</li>
+                    <li>Keep all communications within the in-app messaging system until you're fully confident.</li>
+                    <li>Never pay the full rent before physically viewing the property or confirming its ownership.</li>
+                    <li>Use the app's Report feature to flag any suspicious listings or messages immediately.</li>
+                    <li>Either visit the property yourself or send a trusted representative before making any commitments.</li>
+                </ul>
             </div>
             
             <!-- Stats Cards -->
@@ -725,7 +995,7 @@
                     </div>
                     
                     <div class="property-card">
-                        <div class="property-image" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                        <div class="property-image" style="background: linear-gradient(135deg, #2e86de, #1e6fbf);">
                             <div class="property-price">₵900/month</div>
                             <div class="property-actions">
                                 <div class="property-action-btn">
@@ -844,6 +1114,112 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Footer -->
+        <footer>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Rent Direct</h3>
+                    <p>Ghana's premier platform connecting tenants and landlords directly. No middlemen, no hassle.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Properties</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> Accra, Ghana</a></li>
+                        <li><a href="tel:+233531128932"><i class="fas fa-phone-alt"></i> +233 53 112 8932</a></li>
+                        <li><a href="mailto:info@rentdirectgh.com"><i class="fas fa-envelope"></i> info@rentdirectgh.com</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" id="terms-link"><i class="fas fa-file-contract"></i> Terms & Conditions</a></li>
+                        <li><a href="#"><i class="fas fa-lock"></i> Privacy Policy</a></li>
+                        <li><a href="#"><i class="fas fa-shield-alt"></i> Safety Tips</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Rent Direct Ghana. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Terms & Conditions Modal -->
+    <div class="modal" id="terms-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Terms and Conditions</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h4>1. Acceptance of Terms</h4>
+                <p>By accessing or using RentDirect Ghana ("the Platform"), you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our services.</p>
+                
+                <h4>2. Service Description</h4>
+                <p>RentDirect Ghana provides a digital platform connecting property owners/landlords with prospective tenants. We facilitate direct communication and transactions between these parties.</p>
+                
+                <h4>3. User Responsibilities</h4>
+                <ul>
+                    <li>Landlords must provide accurate property information and maintain listing currency</li>
+                    <li>Tenants must provide accurate personal information for verification</li>
+                    <li>All users must comply with Ghanaian rental laws and regulations</li>
+                    <li>Users are responsible for all transactions conducted through the platform</li>
+                </ul>
+                
+                <h4>4. Fees and Payments</h4>
+                <ul>
+                    <li>Property listing is free for verified landlords</li>
+                    <li>Tenants pay GHS 50 to unlock a single landlord contact or GHS 100 for 30-day unlimited access</li>
+                    <li>Premium listing options are available at additional cost</li>
+                    <li>All payments are non-refundable</li>
+                </ul>
+                
+                <h4>5. Prohibited Activities</h4>
+                <ul>
+                    <li>Misrepresentation of property or personal information</li>
+                    <li>Use by agents, brokers, or middlemen</li>
+                    <li>Circumventing the platform's payment system</li>
+                    <li>Any illegal or fraudulent activities</li>
+                </ul>
+                
+                <h4>6. Verification Process</h4>
+                <p>Landlords must complete identity verification to list properties. We reserve the right to verify tenant identities for security purposes.</p>
+                
+                <h4>7. Dispute Resolution</h4>
+                <p>RentDirect Ghana is not responsible for disputes between landlords and tenants. We encourage parties to resolve issues amicably. For unresolved disputes, contact the Rent Control Department of Ghana.</p>
+                
+                <h4>8. Limitation of Liability</h4>
+                <p>RentDirect Ghana provides the platform "as is" and does not guarantee the accuracy of listings or user information. We are not liable for any damages arising from the use of our services.</p>
+                
+                <h4>9. Modifications to Terms</h4>
+                <p>We reserve the right to modify these terms at any time. Continued use of the platform after changes constitutes acceptance of the modified terms.</p>
+                
+                <h4>10. Governing Law</h4>
+                <p>These Terms and Conditions are governed by the laws of the Republic of Ghana. Any disputes shall be resolved in the courts of Ghana.</p>
+                
+                <p>Effective Date: June 30, 2023</p>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -863,7 +1239,7 @@
                 if (heartIcon.classList.contains('fa-heart')) {
                     heartIcon.classList.remove('fa-heart');
                     heartIcon.classList.add('fa-heart-circle-check');
-                    heartIcon.style.color = 'var(--primary-green)';
+                    heartIcon.style.color = 'var(--primary-blue)';
                 } else {
                     heartIcon.classList.remove('fa-heart-circle-check');
                     heartIcon.classList.add('fa-heart');
@@ -881,7 +1257,7 @@
                 
                 setTimeout(() => {
                     this.innerHTML = '<i class="fas fa-check"></i> Contact Unlocked!';
-                    this.style.background = 'var(--primary-green)';
+                    this.style.background = 'var(--primary-blue)';
                     this.style.color = 'white';
                     
                     // Reset after 3 seconds
@@ -892,6 +1268,40 @@
                     }, 3000);
                 }, 1500);
             });
+        });
+
+        // Terms & Conditions Modal
+        const termsModal = document.getElementById('terms-modal');
+        const termsLink = document.getElementById('terms-link');
+        const closeModal = document.querySelector('.close-modal');
+        
+        // Open modal when Terms link is clicked
+        termsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            termsModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        });
+        
+        // Close modal when close button is clicked
+        closeModal.addEventListener('click', () => {
+            termsModal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Enable background scrolling
+        });
+        
+        // Close modal when clicking outside the modal content
+        termsModal.addEventListener('click', (e) => {
+            if (e.target === termsModal) {
+                termsModal.classList.remove('active');
+                document.body.style.overflow = 'auto'; // Enable background scrolling
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && termsModal.classList.contains('active')) {
+                termsModal.classList.remove('active');
+                document.body.style.overflow = 'auto'; // Enable background scrolling
+            }
         });
     </script>
 </body>
